@@ -7,14 +7,10 @@ import java.util.Map;
 public class ShoppingCart{
 
     private float total;
-    private int countAllPurchases;
-    private float sumAllPurchases;
     private Map<Product,Integer> cartList;  // product,amount
 
     public ShoppingCart(){
         this.total=0;
-        this.countAllPurchases = 0;
-        this.sumAllPurchases =0;
         this.cartList = new HashMap<>();
     }
 
@@ -42,12 +38,6 @@ public class ShoppingCart{
         System.out.println("========================================");
     }
 
-    public void resetCart(){
-        this.countAllPurchases++;
-        this.sumAllPurchases += total;
-        this.cartList.clear();
-        this.total = 0;
-    }
     public void calculateTotal(){
         this.total = 0;
         for (Product product : this.cartList.keySet()){
@@ -70,20 +60,5 @@ public class ShoppingCart{
         this.cartList = cartList;
     }
 
-    public int getCountAllPurchases() {
-        return countAllPurchases;
-    }
-
-    public void setCountAllPurchases(int countAllPurchases) {
-        this.countAllPurchases = countAllPurchases;
-    }
-
-    public float getSumAllPurchases() {
-        return sumAllPurchases;
-    }
-
-    public void setSumAllPurchases(float sumAllPurchases) {
-        this.sumAllPurchases = sumAllPurchases;
-    }
 
 }

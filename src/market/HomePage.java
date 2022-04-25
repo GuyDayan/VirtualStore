@@ -91,6 +91,7 @@ public class HomePage {
 
 
         private void customerMenu(Customer currentCustomer) {
+        try {
             Scanner scanner = new Scanner(System.in);
             System.out.println(currentCustomer.welcomeMessage());
             Integer option = null;
@@ -119,6 +120,7 @@ public class HomePage {
                         }
                     }
                 } while (option != Definitions.FINISH_PURCHASE);
+
                 if (currentCustomer.getUserType() == Definitions.EMPLOYEE_USER) {
                     Employee employee = (Employee) currentCustomer;
                     float currentTotal = employee.getCart().getTotal();
@@ -134,14 +136,17 @@ public class HomePage {
                             break;
                     }
                     System.out.println("You choose to finish your shopping, The total price after discount is: " + employee.getCart().getTotal());
-                    employee.getCart().resetCart();
+                    employee.finishPurchase();
                 } else {
                     System.out.println("You choose to finish your shopping, The total price is: " + currentCustomer.getCart().getTotal());
-                    currentCustomer.getCart().resetCart();   // reset the cart of the customer;
+                    currentCustomer.finishPurchase();   // reset the cart of the customer;
                 }
             }else {
                 System.out.println("--- For this moment the store is empty ---");
             }
+        }catch (Exception e){
+            System.out.println("Wrong input");
+        }
         }
         private void employeeMenu(Employee currentEmployee){
             Scanner scanner = new Scanner(System.in);
@@ -226,21 +231,21 @@ public class HomePage {
             Customer currentUser = null;
             for (User user : this.users){
                 currentUser = (Customer)user;
-                float maxCurrentUser  = currentUser.getCart().getSumAllPurchases();
+                float maxCurrentUser  = currentUser.getSumAllPurchases();
                 if ((currentUser!=null) && (maxCurrentUser > max)){
                     max = maxCurrentUser;
                     highestCurrentUser = currentUser;
                 }
             }
             if (highestCurrentUser!=null)
-            System.out.println(highestCurrentUser + " spent --> " + highestCurrentUser.getCart().getSumAllPurchases());
+            System.out.println(highestCurrentUser + " spent --> " + highestCurrentUser.getSumAllPurchases());
         }
         private void printCustomersMadePurchases(){
             System.out.println("List of customer made at least one purchase:");
             Customer currentUser = null;
             for (User user : this.users) {
                 currentUser = (Customer) user;
-                if ((currentUser!=null) && (currentUser.getCart().getCountAllPurchases() >= 1)){
+                if ((currentUser!=null) && (currentUser.getCountAllPurchases() >= 1)){
                     System.out.println(currentUser);
                 }
             }
