@@ -2,12 +2,16 @@ package entitles;
 
 import market.ShoppingCart;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class Customer extends User implements Introducer{
     private boolean isClubMember;
     private ShoppingCart cart;
     private int countAllPurchases;
     private float sumAllPurchases;
+    private Date lastPurchaseDate;
 
     public Customer(String firstName, String lastName, String userName, String password,int userType,boolean isClubMember) {
         super(firstName, lastName, userName, password, userType);
@@ -18,6 +22,7 @@ public class Customer extends User implements Introducer{
     }
 
     public void finishPurchase(){
+        this.lastPurchaseDate = new Date();
         this.countAllPurchases++;
         this.sumAllPurchases += this.cart.getTotal();
         this.cart.getCartList().clear();
@@ -65,4 +70,33 @@ public class Customer extends User implements Introducer{
     public void setSumAllPurchases(float sumAllPurchases) {
         this.sumAllPurchases = sumAllPurchases;
     }
+
+    public Date getLastPurchaseDate() {
+        return lastPurchaseDate;
+    }
+
+    public void setLastPurchaseDate(Date lastPurchaseDate) {
+        this.lastPurchaseDate = lastPurchaseDate;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        StringBuilder message = new StringBuilder();
+        message.append(this.getFirstName()).append(" ").append(this.getLastName());
+        if (this.isClubMember) {
+            message.append(" -- Club member");
+        }else {
+            message.append(" -- Not club member");
+        }
+                message.append(" ,Total purchases: ").append(this.sumAllPurchases).append(" ,Number of purchases:").append(this.countAllPurchases);
+        if (lastPurchaseDate != null) {
+            message.append(" ,Last purchase : " + formatter.format(this.lastPurchaseDate));
+        }else {
+            message.append(" ,Last purchase : No purchase");
+        }
+
+        return message.toString();
+    }
 }
+

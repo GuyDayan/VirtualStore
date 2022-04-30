@@ -17,6 +17,9 @@ public class HomePage {
     public HomePage() {
         this.users = new ArrayList<>();
         this.store = new Store();
+        this.users.add(new Customer("Guy","Dayan","bobi" , "123456",1,true));
+        this.users.add(new Employee("Yoni" ,"Hada" ,"momi","123456",2,true,2));
+
     }
 
 
@@ -263,7 +266,9 @@ public class HomePage {
         }
         public void printAllCustomers(){
             for (User user : this.users) {
-                System.out.println(user.toString());
+                Customer customer = (Customer) user;
+                System.out.println(customer.toString());
+               // System.out.println(user.toString());
             }
         }
         private boolean checkAvailabilityOfAmount(int option , int amount){
